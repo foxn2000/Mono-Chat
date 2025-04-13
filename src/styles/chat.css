@@ -192,13 +192,14 @@ textarea {
 }
 
 .user-message {
-  margin-left: 30%;
-  margin-right: 5%;
+  max-width: 60%;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
 }
 
 .ai-message {
-  margin-left: 5%;
-  margin-right: 30%;
+  max-width: 60%;
 }
 
 .user-message .message-background {
