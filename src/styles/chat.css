@@ -21,6 +21,16 @@ body {
   /* 画面の高さの80%から余白を引く */
   margin-bottom: calc(20vh + 1rem);
   /* 区切り線とフォーム分の余白 */
+  mask-image: linear-gradient(to bottom, 
+    black 0%,
+    black calc(100% - 3rem),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, 
+    black 0%,
+    black calc(100% - 3rem),
+    transparent 100%
+  );
 }
 
 /* 線を表示するためのコンテナ */
