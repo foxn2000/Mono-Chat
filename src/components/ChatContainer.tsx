@@ -7,28 +7,29 @@ export const ChatContainer: React.FC = () => {
   const { messages, isLoading, error, sendMessage } = useChatState();
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      <header className="bg-blue-500 text-white p-4">
-        <h1 className="text-xl font-bold">Cerebras Chat</h1>
-      </header>
-      
-      <main className="flex-1 flex flex-col">
+    <>
+      <div id="chat-area">
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <span className="block sm:inline">{error}</span>
           </div>
         )}
-        
         <MessageList
           messages={messages}
           isLoading={isLoading}
         />
-        
+      </div>
+      
+      <div id="line-display-zone">
+        <div id="divider-line"></div>
+      </div>
+      
+      <div id="input-outer-container">
         <InputForm
           onSubmit={sendMessage}
           isLoading={isLoading}
         />
-      </main>
-    </div>
+      </div>
+    </>
   );
 };

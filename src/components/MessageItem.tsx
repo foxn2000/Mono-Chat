@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { Components } from 'react-markdown';
 import type { Message } from '../types/chat';
 
 interface MessageItemProps {
@@ -9,22 +9,59 @@ interface MessageItemProps {
 export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
   const isUser = message.role === 'user';
 
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text).catch(err => {
+      console.error('コピーに失敗しました:', err);
+    });
+  };
+
+  const components: Partial<Components> = {
+    code(props) {
+      const {children, className, node, ...rest} = props;
+      const isInline = !className;
+      
+      if (isInline) {
+        return (
+          <code
+            {...rest}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCopy(String(children));
+            }}
+          >
+            {children}
+          </code>
+        );
+      }
+
+      return (
+        <pre>
+          <code
+            {...rest}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCopy(String(children));
+            }}
+          >
+            {children}
+          </code>
+        </pre>
+      );
+    }
+  };
+
   return (
-    <div
-      className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}
-    >
-      <div
-        className={`max-w-[70%] rounded-lg p-4 ${
-          isUser
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-100 text-gray-800'
-        }`}
+    <div className={`flex mb-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
+      <div 
+        className={`message-wrapper ${isUser ? 'user-message' : 'ai-message'}`}
+        onClick={() => handleCopy(message.content)}
       >
-        <ReactMarkdown components={{
-          p: ({children}) => <p className="prose prose-sm max-w-none m-0">{children}</p>
-        }}>
-          {message.content}
-        </ReactMarkdown>
+        <span className="message-text">
+          <ReactMarkdown components={components}>
+            {message.content}
+          </ReactMarkdown>
+        </span>
+        <div className="message-background"></div>
       </div>
     </div>
   );

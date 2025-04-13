@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, KeyboardEvent } from 'react';
+import React, { useState, FormEvent, KeyboardEvent, useEffect, useRef } from 'react';
 
 interface InputFormProps {
   onSubmit: (content: string) => void;
@@ -7,6 +7,31 @@ interface InputFormProps {
 
 export const InputForm: React.FC<InputFormProps> = ({ onSubmit, isLoading }) => {
   const [input, setInput] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    textarea.style.height = 'auto';
+    const computedStyle = getComputedStyle(textarea);
+    const lineHeight = parseFloat(computedStyle.lineHeight);
+    const effectiveLineHeight = isNaN(lineHeight)
+      ? parseFloat(computedStyle.fontSize) * 1.2
+      : lineHeight;
+    const padding = parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom);
+    const maxLines = 2;
+    const maxHeight = effectiveLineHeight * maxLines + padding;
+    const contentHeight = textarea.scrollHeight;
+    const newHeight = Math.min(contentHeight, maxHeight);
+    
+    textarea.style.height = `${newHeight}px`;
+    textarea.style.overflowY = (contentHeight > maxHeight) ? 'auto' : 'hidden';
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [input]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -18,35 +43,27 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit, isLoading }) => 
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      if (e.shiftKey) return; // Shift+Enterは改行
       e.preventDefault();
       handleSubmit(e);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="border-t p-4">
-      <div className="flex space-x-4">
+    <form onSubmit={handleSubmit}>
+      <div className="input-wrapper">
         <textarea
+          ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="メッセージを入力..."
-          className="flex-1 resize-none rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          rows={1}
+          placeholder="Ctrl+Enter"
           disabled={isLoading}
+          rows={1}
+          aria-label="メッセージ入力"
         />
-        <button
-          type="submit"
-          disabled={!input.trim() || isLoading}
-          className={`rounded-lg px-4 py-2 font-semibold text-white ${
-            !input.trim() || isLoading
-              ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-blue-500 hover:bg-blue-600'
-          }`}
-        >
-          送信
-        </button>
+        <div className="input-background"></div>
       </div>
     </form>
   );

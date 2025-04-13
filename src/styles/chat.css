@@ -1,0 +1,256 @@
+/* 基本スタイル */
+body {
+  font-family: 'Atkinson Hyperlegible Mono', 'Noto Sans JP', sans-serif;
+  background-color: #fefdf9;
+  /* クリーム色がかった背景（より白に近い） */
+  overscroll-behavior: none;
+  color: #3b6369;
+  /* 文字色を深い緑に */
+  height: 100vh;
+  overflow: hidden;
+  /* 全体のスクロールを禁止 */
+  margin: 0;
+  position: relative;
+}
+
+/* チャットエリア */
+#chat-area {
+  overflow-y: auto;
+  padding: 1.5rem 20vw;
+  height: calc(80vh - 2rem);
+  /* 画面の高さの80%から余白を引く */
+  margin-bottom: calc(20vh + 1rem);
+  /* 区切り線とフォーム分の余白 */
+}
+
+/* 線を表示するためのコンテナ */
+#line-display-zone {
+  height: 1.5rem;
+  position: fixed;
+  bottom: 20vh;
+  /* 画面の下から1/5の位置 */
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(254, 253, 249, 0.8) 30%,
+      rgba(254, 253, 249, 0.8) 70%,
+      transparent 100%);
+}
+
+/* 切れ目ライン（両端を尖らせる） */
+#divider-line {
+  position: absolute;
+  top: 20%;
+  transform: translateY(-50%);
+  left: 10%;
+  width: 80%;
+  height: 1.5px;
+  background-color: #000000;
+  pointer-events: none;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* 入力エリア外側コンテナ */
+#input-outer-container {
+  padding: 0 25vw;
+  margin-bottom: 1rem;
+  position: fixed;
+  bottom: calc(20vh - 4rem); /* 区切り線の位置から少し上に配置 */
+  left: 0;
+  right: 0;
+  background-color: #fefdf9;
+}
+
+/* 入力部分ラッパー */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  height: auto;
+}
+
+/* テキストエリア */
+textarea {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(1.6em * 2 + 1rem);
+  margin: 0;
+  border: none;
+  background: transparent;
+  resize: none;
+  overflow-y: auto;
+  outline: none;
+  color: #3b6369;
+  /* 文字色を深い緑に */
+  z-index: 10;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* 入力欄の背景 (浮石効果) */
+.input-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  opacity: 0;
+  transform: translateY(3px) scale(0.98);
+  transition: opacity 0.2s ease-in-out,
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  pointer-events: none;
+  border-radius: 10px;
+  background: #fefdf9;
+  /* クリーム色がかった背景（より白に近い） */
+}
+
+.input-wrapper:hover .input-background,
+.input-wrapper:focus-within .input-background {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  box-shadow: 6px 6px 12px #c8cdd3, -6px -6px 12px #f8f9ff;
+}
+
+/* スクロールバーのスタイル */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fefdf9;
+  /* クリーム色がかった背景（より白に近い） */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8cdd3;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8adb3;
+}
+
+/* チャットメッセージ関連のスタイル */
+.message-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  /* クリックでコピーできる */
+}
+
+.message-text {
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  transition: color 0.2s ease-in-out;
+  line-height: 1.6;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* 全体をコピーするときのわかりやすさ */
+.message-text:hover {
+  opacity: 0.9;
+  text-decoration: underline dashed;
+}
+
+.message-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  opacity: 0;
+  transform: translateY(3px) scale(0.98);
+  transition: opacity 0.2s ease-in-out,
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  pointer-events: none;
+  border-radius: 10px;
+  background: #fefdf9;
+  /* クリーム色がかった背景（より白に近い） */
+}
+
+.message-wrapper:hover .message-background {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  box-shadow: 6px 6px 12px #c8cdd3, -6px -6px 12px #f8f9ff;
+}
+
+.user-message {
+  margin-left: 30%;
+  margin-right: 5%;
+}
+
+.ai-message {
+  margin-left: 5%;
+  margin-right: 30%;
+}
+
+.user-message .message-background {
+  background: #f0f5f7;
+}
+
+.ai-message .message-background {
+  background: #f5f7f0;
+}
+
+/* ---- コードブロックの強調表示用 ---- */
+pre>code {
+  /* クリックでコピー可能にするためのスタイル */
+  position: relative;
+  display: block;
+  cursor: pointer;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  /* さらに浮き上がり効果を強く */
+  background: #f9fafb;
+  /* 少し明るめ */
+  box-shadow: inset 1px 1px 2px #cbced3, inset -1px -1px 2px #ffffff;
+  font-family: 'Fragment Mono', monospace;
+  /* フォントを "Fragment Mono" に */
+  font-size: 0.95rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  /* 横スクロールを避ける場合 */
+}
+
+pre>code:hover {
+  background: #f3f4f6;
+  box-shadow: 6px 6px 12px #d2d6db, -6px -6px 12px #ffffff;
+}
+
+/* インラインコードも盛り上げる */
+p code:not(:only-child),
+li code {
+  cursor: pointer;
+  background: #edf2f7;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  font-family: 'Fragment Mono', monospace;
+  /* フォントを "Fragment Mono" に */
+  font-size: 0.95rem;
+}
+
+/* ホバー時少し強調 */
+p code:hover,
+li code:hover {
+  background: #e2e8f0;
+  text-decoration: underline dotted;
+}

@@ -15,22 +15,25 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, isLoading })
   }, [messages]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-4">
+    <>
       {messages.map((message, index) => (
         <MessageItem key={index} message={message} />
       ))}
       {isLoading && (
-        <div className="flex justify-start mb-4">
-          <div className="bg-gray-100 rounded-lg p-4">
-            <div className="flex space-x-2">
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
-            </div>
+        <div className="flex mb-3 justify-start">
+          <div className="message-wrapper ai-message">
+            <span className="message-text">
+              <div className="flex space-x-2">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+              </div>
+            </span>
+            <div className="message-background"></div>
           </div>
         </div>
       )}
       <div ref={bottomRef} />
-    </div>
+    </>
   );
 };
