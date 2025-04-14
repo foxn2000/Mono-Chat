@@ -1,13 +1,37 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import type { Message, ChatState } from '../types/chat';
-import { fetchChatStream } from '../api/cerebras';
+import { createApiClient, type ApiClient } from '../api/modelFactory';
+import { getDefaultModelId } from '../config/modelConfig';
 
-export const useChatState = () => {
+export const useChatState = (modelId?: string) => {
   const [state, setState] = useState<ChatState>({
     messages: [],
     isLoading: false,
     error: null,
   });
+
+  const [apiClient, setApiClient] = useState<ApiClient | null>(null);
+  const [currentModelId, setCurrentModelId] = useState<string | null>(null);
+
+  // APIクライアントの初期化
+  useEffect(() => {
+    const initializeApiClient = async () => {
+      try {
+        const defaultModelId = modelId || await getDefaultModelId();
+        const client = await createApiClient(defaultModelId);
+        setApiClient(client);
+        setCurrentModelId(defaultModelId);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : '未知のエラーが発生しました';
+        setState(prev => ({
+          ...prev,
+          error: errorMessage,
+        }));
+      }
+    };
+
+    initializeApiClient();
+  }, [modelId]);
 
   const addMessage = useCallback((message: Message) => {
     setState(prev => ({
@@ -40,7 +64,7 @@ export const useChatState = () => {
     });
   }, []);
 
-  const sendMessage = useCallback(async (content: string) => {
+  const sendMessage = useCallback(async (content: string, params?: any) => {
     const userMessage: Message = {
       role: 'user',
       content,
@@ -53,8 +77,16 @@ export const useChatState = () => {
       error: null,
     }));
 
+    if (!apiClient) {
+      setState(prev => ({
+        ...prev,
+        error: 'APIクライアントが初期化されていません',
+      }));
+      return;
+    }
+
     try {
-      await fetchChatStream(
+      await apiClient.fetchChatStream(
         [...state.messages, userMessage],
         (chunk) => {
           updateLastAssistantMessage(chunk);
@@ -65,7 +97,8 @@ export const useChatState = () => {
             error,
             isLoading: false,
           }));
-        }
+        },
+        params
       );
     } finally {
       setState(prev => ({
@@ -80,5 +113,6 @@ export const useChatState = () => {
     isLoading: state.isLoading,
     error: state.error,
     sendMessage,
+    currentModelId,
   };
 };
