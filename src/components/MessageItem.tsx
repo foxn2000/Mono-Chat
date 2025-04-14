@@ -51,7 +51,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
   };
 
   return (
-    <div className={`flex mb-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex mb-3`}> {/* justify-end/start を削除 */}
       <div 
         className={`message-wrapper ${isUser ? 'user-message' : 'ai-message'}`}
         onClick={() => handleCopy(message.content)}

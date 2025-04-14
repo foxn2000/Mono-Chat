@@ -155,7 +155,7 @@ textarea {
 /* チャットメッセージ関連のスタイル */
 .message-wrapper {
   position: relative;
-  display: inline-block;
+  display: block; /* block に設定 */
   cursor: pointer;
   /* クリックでコピーできる */
 }
@@ -201,17 +201,22 @@ textarea {
   box-shadow: 6px 6px 12px #c8cdd3, -6px -6px 12px #f8f9ff;
 }
 
+/* .user-message と .ai-message に margin を追加して左右配置 */
 .user-message {
   max-width: 60%;
   margin-left: auto;
   margin-right: 0;
-  text-align: right;
+  display: flex; /* flexbox を使用 */
+  justify-content: flex-end; /* 内容を右端に寄せる */
 }
 
 .ai-message {
   max-width: 60%;
+  margin-left: 0;
+  margin-right: auto;
 }
 
+/* 背景色は元の指定方法に戻す */
 .user-message .message-background {
   background: #f0f5f7;
 }
