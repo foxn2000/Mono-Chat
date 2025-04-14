@@ -152,10 +152,18 @@ textarea {
   background: #a8adb3;
 }
 
+/* text-align ヘルパークラス */
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
 /* チャットメッセージ関連のスタイル */
 .message-wrapper {
   position: relative;
-  display: block; /* block に設定 */
+  display: inline-block; /* inline-block に変更 */
   cursor: pointer;
   /* クリックでコピーできる */
 }
@@ -201,19 +209,15 @@ textarea {
   box-shadow: 6px 6px 12px #c8cdd3, -6px -6px 12px #f8f9ff;
 }
 
-/* .user-message と .ai-message に margin を追加して左右配置 */
+/* .user-message と .ai-message の配置は親要素の text-align で制御 */
 .user-message {
   max-width: 60%;
-  margin-left: auto;
-  margin-right: 0;
-  display: flex; /* flexbox を使用 */
-  justify-content: flex-end; /* 内容を右端に寄せる */
+  /* 配置関連のスタイルは削除 */
 }
 
 .ai-message {
   max-width: 60%;
-  margin-left: 0;
-  margin-right: auto;
+  /* 配置関連のスタイルは削除 */
 }
 
 /* 背景色は元の指定方法に戻す */
