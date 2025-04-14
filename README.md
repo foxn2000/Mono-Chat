@@ -9,6 +9,7 @@ A minimalist chat interface built with React and TypeScript, supporting multiple
 ## Features
 
 - Clean and intuitive chat interface
+- Dynamic model switching with a floating stone-like UI
 - Real-time streaming responses with typing effect
 - Markdown message formatting support
 - Code block syntax highlighting with copy functionality
@@ -100,6 +101,7 @@ npm run dev
 - **Send Message**: Use Ctrl+Enter (or Cmd+Enter on macOS) to send
 - **Copy Text**: Click on any message to copy its content
 - **Code Blocks**: Code snippets are automatically formatted and can be copied with a click
+- **Model Selection**: Hover over the top-left corner to reveal the model selector, which appears like a floating stone. Click to view and select from available models
 
 ## Development
 
