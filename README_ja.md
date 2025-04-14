@@ -1,4 +1,4 @@
-# Simple Chat
+# Mono Chat
 
 ![alt text](<pic.png>)
 
@@ -35,7 +35,7 @@ ReactとTypeScriptで構築されたミニマリストなチャットインタ�
 1. リポジトリをクローンします：
 ```bash
 git clone [your-repository-url]
-cd simple_chat
+cd mono-chat
 ```
 
 2. 依存関係をインストールします：
@@ -105,7 +105,7 @@ npm run dev
 ### プロジェクト構造
 
 ```
-simple_chat/
+mono-chat/
 ├── src/
 │   ├── api/          # API連携とファクトリー
 │   ├── components/   # Reactコンポーネント

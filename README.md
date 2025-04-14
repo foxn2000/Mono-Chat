@@ -1,4 +1,4 @@
-# Simple Chat
+# Mono Chat
 
 ![alt text](<pic.png>)
 
@@ -37,7 +37,7 @@ Before you begin, ensure you have:
 1. Clone the repository:
 ```bash
 git clone [your-repository-url]
-cd simple_chat
+cd mono-chat
 ```
 
 2. Install dependencies:
@@ -108,7 +108,7 @@ npm run dev
 ### Project Structure
 
 ```
-simple_chat/
+mono-chat/
 ├── src/
 │   ├── api/          # API integration and factory
 │   ├── components/   # React components
