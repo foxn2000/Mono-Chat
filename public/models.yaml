@@ -1,6 +1,6 @@
 models:
   # デフォルトで使用するモデル
-  default: cerebras-llama3
+  default: cerebras-llama3.3
 
   # 利用可能なモデル
   available:

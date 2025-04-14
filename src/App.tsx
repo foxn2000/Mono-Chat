@@ -1,5 +1,6 @@
 import { ApiProvider, useApi } from './contexts/ApiContext';
 import { ChatContainer } from './components/ChatContainer';
+import { ModelSelector } from './components/ModelSelector';
 import './styles/chat.css';
 
 // ローディングコンポーネント
@@ -34,7 +35,12 @@ const AppContent = () => {
     return <ErrorScreen error={error} />;
   }
 
-  return <ChatContainer />;
+  return (
+    <>
+      <ModelSelector />
+      <ChatContainer />
+    </>
+  );
 };
 
 function App() {

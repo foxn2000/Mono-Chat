@@ -160,6 +160,134 @@ textarea {
   text-align: left;
 }
 
+/* モデルセレクター用のスタイル */
+.model-selector-container {
+  position: fixed;
+  top: 1rem;
+  left: 1.5rem;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  padding: 0.5rem;
+}
+
+.model-selector-container:hover {
+  opacity: 1;
+}
+
+.model-selector-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #3b6369;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* 浮石効果の背景 */
+.model-selector-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fefdf9;
+  border-radius: 8px;
+  z-index: -1;
+  opacity: 0;
+  transform: translateY(3px) scale(0.98);
+  transition: opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+}
+
+.model-selector-container:hover .model-selector-button::before {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  box-shadow: 6px 6px 12px rgba(200, 205, 211, 0.7), 
+              -6px -6px 12px rgba(248, 249, 255, 0.7);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 6px 6px 12px rgba(200, 205, 211, 0.7), 
+                -6px -6px 12px rgba(248, 249, 255, 0.7);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 8px 8px 16px rgba(200, 205, 211, 0.8), 
+                -8px -8px 16px rgba(248, 249, 255, 0.8);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 6px 6px 12px rgba(200, 205, 211, 0.7), 
+                -6px -6px 12px rgba(248, 249, 255, 0.7);
+  }
+}
+
+.model-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: #fefdf9;
+  border-radius: 8px;
+  box-shadow: 6px 6px 12px rgba(200, 205, 211, 0.7), 
+              -6px -6px 12px rgba(248, 249, 255, 0.7);
+  overflow: hidden;
+  min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 101;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  visibility: hidden;
+}
+
+.model-dropdown.visible {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.model-option {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.model-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: -1;
+  transition: all 0.2s ease;
+}
+
+.model-option:hover::before {
+  background: #f0f5f7;
+  box-shadow: inset 2px 2px 5px rgba(200, 205, 211, 0.5), 
+              inset -2px -2px 5px rgba(255, 255, 255, 0.5);
+}
+
+.model-option.active::before {
+  background: #e0e5e7;
+  box-shadow: inset 3px 3px 7px rgba(200, 205, 211, 0.7), 
+              inset -3px -3px 7px rgba(255, 255, 255, 0.7);
+}
+
 /* チャットメッセージ関連のスタイル */
 .message-wrapper {
   position: relative;
