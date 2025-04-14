@@ -1,5 +1,7 @@
 # Simple Chat
 
+![alt text](<pic.png>)
+
 ReactとTypeScriptで構築されたミニマリストなチャットインターフェースです。Cerebras、OpenAI、Anthropicなど、複数のAIプロバイダーに対応し、マークダウン対応とリアルタイムストリーミングレスポンスを特徴とする、クリーンで直感的なAIチャット体験を提供します。
 
 ## 特徴

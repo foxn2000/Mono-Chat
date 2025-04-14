@@ -1,5 +1,7 @@
 # Simple Chat
 
+![alt text](<pic.png>)
+
 A minimalist chat interface built with React and TypeScript, supporting multiple AI providers including Cerebras, OpenAI, and Anthropic. This application provides a clean and intuitive chat experience with AI, featuring markdown support and real-time streaming responses.
 
 [日本語のREADME](./README_ja.md)
