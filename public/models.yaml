@@ -1,6 +1,6 @@
 models:
   # デフォルトで使用するモデル
-  default: openai-gpt4o-mini
+  default: cerebras-llama3
 
   # 利用可能なモデル
   available:
@@ -13,7 +13,7 @@ models:
         max_tokens: 1000
     # 他のモデルを必要に応じて追加
     # Cerebras LLaMA 3モデル
-    cerebras-llama3:
+    cerebras-llama3.3:
       name: llama-3.3-70b
       baseUrl: https://api.cerebras.ai/v1/chat/completions
       apiKeyEnvName: VITE_CEREBRAS_API_KEY
@@ -29,12 +29,134 @@ models:
       defaultParams:
         temperature: 0.7
         max_tokens: 4096
+
+    # OpenAI GPT-4oモデル
+    openai-gpt4o:
+      name: gpt-4o
+      baseUrl: https://api.openai.com/v1/chat/completions
+      apiKeyEnvName: VITE_OPENAI_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
     
     # Claude 3.5モデル
-    anthropic-claude:
+    anthropic-claude-haiku:
       name: claude-3-5-haiku-20241022
       baseUrl: https://api.anthropic.com/v1/messages
       apiKeyEnvName: VITE_ANTHROPIC_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    # Claude 3.5モデル
+    anthropic-claude-sonnet:
+      name: claude-3-5-sonnet-20241022
+      baseUrl: https://api.anthropic.com/v1/messages
+      apiKeyEnvName: VITE_ANTHROPIC_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    google-gemini-25-pro:
+      name: gemini-2.5-pro-exp
+      baseUrl: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+      apiKeyEnvName: VITE_GEMINI_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_output_tokens: 4096
+
+    google-gemini-20-flash:
+      name: gemini-2.0-flash
+      baseUrl: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+      apiKeyEnvName: VITE_GEMINI_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_output_tokens: 4096
+
+    sambanova-deepseek-v3:
+      name: DeepSeek-V3-0324
+      baseUrl: https://api.sambanova.ai/v1/chat/completions
+      apiKeyEnvName: VITE_SAMBANOVA_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    sambanova-llama31-405b:
+      name: Meta-Llama-3.1-405B-Instruct
+      baseUrl: https://api.sambanova.ai/v1/chat/completions
+      apiKeyEnvName: VITE_SAMBANOVA_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    sambanova-Qwen-72b:
+      name: Qwen2.5-72B-Instruct
+      baseUrl: https://api.sambanova.ai/v1/chat/completions
+      apiKeyEnvName: VITE_SAMBANOVA_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    sambanova-Swallow-70b:
+      name: Llama-3.1-Swallow-70B-Instruct-v0.3
+      baseUrl: https://api.sambanova.ai/v1/chat/completions
+      apiKeyEnvName: VITE_SAMBANOVA_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    groq-llama4-128e:
+      name: meta-llama/llama-4-maverick-17b-128e-instruct
+      baseUrl: https://api.groq.com/openai/v1/chat/completions
+      apiKeyEnvName: VITE_GROQ_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    groq-qwen-2.5-coder-32b:
+      name: qwen-2.5-coder-32b
+      baseUrl: https://api.groq.com/openai/v1/chat/completions
+      apiKeyEnvName: VITE_GROQ_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    deepseek-chat:
+      name: deepseek-chat
+      baseUrl: https://api.deepseek.com/v1/chat/completions
+      apiKeyEnvName: VITE_DEEPSEEK_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    deepseek-reasoner:
+      name: deepseek-reasoner
+      baseUrl: https://api.deepseek.com/v1/chat/completions
+      apiKeyEnvName: VITE_DEEPSEEK_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    xai-grok-3-beta:
+      name: grok-3-beta
+      baseUrl: https://api.x.ai/v1/chat/completions
+      apiKeyEnvName: VITE_XAI_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+
+    xai-grok-3-mini-beta:
+      name: grok-3-mini-beta
+      baseUrl: https://api.x.ai/v1/chat/completions
+      apiKeyEnvName: VITE_XAI_API_KEY
+      defaultParams:
+        temperature: 0.7
+        max_tokens: 4096
+    # ollamaモデル
+    ollama:
+      name: gemma3:4b
+      baseUrl: http://localhost:11434/v1/chat/completions
+      apiKeyEnvName: VITE_OLLAMA_API_KEY
       defaultParams:
         temperature: 0.7
         max_tokens: 4096
