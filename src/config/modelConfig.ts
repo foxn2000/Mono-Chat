@@ -45,25 +45,62 @@ export async function loadModelConfig(): Promise<ModelsConfig> {
   try {
     const response = await fetch('/models.yaml');
     if (!response.ok) {
-      throw new Error(`Failed to load models.yaml: ${response.statusText}`);
+      console.error(`Failed to load models.yaml: ${response.statusText}`);
+      return DEFAULT_CONFIG;
     }
     const yamlText = await response.text();
-    return yaml.load(yamlText) as ModelsConfig;
+    const config = yaml.load(yamlText) as ModelsConfig;
+    
+    // 設定の検証
+    if (!config.models?.default || !config.models?.available) {
+      console.error('Invalid models.yaml format: missing required fields');
+      return DEFAULT_CONFIG;
+    }
+    
+    // デフォルトモデルが利用可能なモデルに存在するか確認
+    if (!config.models.available[config.models.default]) {
+      console.error(`Default model "${config.models.default}" not found in available models`);
+      return DEFAULT_CONFIG;
+    }
+    
+    return config;
   } catch (error) {
     console.error('モデル設定の読み込みに失敗しました', error);
     return DEFAULT_CONFIG;
   }
 }
 
-// 現在のモデル設定を保持する
-let currentConfig: ModelsConfig | null = null;
+// モデル設定を保持するキャッシュ
+let configCache: {
+  config: ModelsConfig | null;
+  timestamp: number;
+} = {
+  config: null,
+  timestamp: 0,
+};
+
+// キャッシュの有効期限（5分）
+const CACHE_TTL = 5 * 60 * 1000;
 
 // モデル設定を取得する関数
 export async function getModelConfig(): Promise<ModelsConfig> {
-  if (!currentConfig) {
-    currentConfig = await loadModelConfig();
+  const now = Date.now();
+  
+  // キャッシュが有効な場合はキャッシュを返す
+  if (configCache.config && (now - configCache.timestamp) < CACHE_TTL) {
+    return configCache.config;
   }
-  return currentConfig;
+  
+  // 新しい設定を読み込む
+  const config = await loadModelConfig();
+  
+  // キャッシュを更新
+  configCache = {
+    config,
+    timestamp: now,
+  };
+  
+  return config;
 }
 
 // 特定のモデルの設定を取得する関数

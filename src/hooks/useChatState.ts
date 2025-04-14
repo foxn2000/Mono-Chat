@@ -15,22 +15,45 @@ export const useChatState = (modelId?: string) => {
 
   // APIクライアントの初期化
   useEffect(() => {
+    let mounted = true;
+    let retryCount = 0;
+    const maxRetries = 3;
+    const retryDelay = 1000; // 1秒
+
     const initializeApiClient = async () => {
       try {
         const defaultModelId = modelId || await getDefaultModelId();
         const client = await createApiClient(defaultModelId);
-        setApiClient(client);
-        setCurrentModelId(defaultModelId);
+        
+        if (mounted) {
+          setApiClient(client);
+          setCurrentModelId(defaultModelId);
+          setState(prev => ({
+            ...prev,
+            error: null,
+          }));
+        }
       } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : '未知のエラーが発生しました';
-        setState(prev => ({
-          ...prev,
-          error: errorMessage,
-        }));
+        console.error('APIクライアントの初期化に失敗しました:', error);
+        
+        if (mounted && retryCount < maxRetries) {
+          retryCount++;
+          setTimeout(initializeApiClient, retryDelay);
+        } else if (mounted) {
+          const errorMessage = error instanceof Error ? error.message : '未知のエラーが発生しました';
+          setState(prev => ({
+            ...prev,
+            error: `APIクライアントの初期化に失敗しました: ${errorMessage}`,
+          }));
+        }
       }
     };
 
     initializeApiClient();
+
+    return () => {
+      mounted = false;
+    };
   }, [modelId]);
 
   const addMessage = useCallback((message: Message) => {
@@ -80,7 +103,8 @@ export const useChatState = (modelId?: string) => {
     if (!apiClient) {
       setState(prev => ({
         ...prev,
-        error: 'APIクライアントが初期化されていません',
+        error: 'APIクライアントの初期化中です。しばらくお待ちください。',
+        isLoading: false,
       }));
       return;
     }

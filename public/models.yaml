@@ -1,6 +1,6 @@
 models:
   # デフォルトで使用するモデル
-  default: cerebras-llama4
+  default: openai-gpt4o-mini
 
   # 利用可能なモデル
   available:
