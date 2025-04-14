@@ -34,7 +34,7 @@ ReactとTypeScriptで構築されたミニマリストなチャットインタ�
 
 1. リポジトリをクローンします：
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/foxn2000/Mono-Chat.git
 cd mono-chat
 ```
 
@@ -52,7 +52,6 @@ cp .env.example .env
 ```
 # Cerebras API設定
 VITE_CEREBRAS_API_KEY=your_cerebras_api_key_here
-VITE_CEREBRAS_BASE_URL=https://api.cerebras.ai/v1
 
 # OpenAI API設定
 VITE_OPENAI_API_KEY=your_openai_api_key_here

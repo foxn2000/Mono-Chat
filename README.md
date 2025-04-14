@@ -36,7 +36,7 @@ Before you begin, ensure you have:
 
 1. Clone the repository:
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/foxn2000/Mono-Chat.git
 cd mono-chat
 ```
 
@@ -53,7 +53,6 @@ cp .env.example .env
 4. Add your API keys to the `.env` file:
 ```
 # Cerebras API settings
-VITE_CEREBRAS_API_KEY=your_cerebras_api_key_here
 VITE_CEREBRAS_BASE_URL=https://api.cerebras.ai/v1
 
 # OpenAI API settings
