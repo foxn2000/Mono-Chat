@@ -1,6 +1,6 @@
 models:
   # デフォルトで使用するモデル
-  default: cerebras-llama3.3
+  default: openllm
 
   # 利用可能なモデル
   available:
@@ -42,7 +42,7 @@ models:
     # Claude 3.5モデル
     anthropic-claude-haiku:
       name: claude-3-5-haiku-20241022
-      baseUrl: https://api.anthropic.com/v1/messages
+      baseUrl: https://api.anthropic.com/v1/chat/completions
       apiKeyEnvName: VITE_ANTHROPIC_API_KEY
       defaultParams:
         temperature: 0.7
@@ -51,7 +51,7 @@ models:
     # Claude 3.5モデル
     anthropic-claude-sonnet:
       name: claude-3-5-sonnet-20241022
-      baseUrl: https://api.anthropic.com/v1/messages
+      baseUrl: https://api.anthropic.com/v1/chat/completions
       apiKeyEnvName: VITE_ANTHROPIC_API_KEY
       defaultParams:
         temperature: 0.7
@@ -160,3 +160,8 @@ models:
       defaultParams:
         temperature: 0.7
         max_tokens: 4096
+    
+    openllm:
+      name: ollama-r1
+      baseUrl: http://localhost:3001/v1/chat/completions
+      apiKeyEnvName: VITE_OPENAI_RUTER_API_KEY
